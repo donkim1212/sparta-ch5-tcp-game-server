@@ -1,6 +1,6 @@
-import envConstants from "../constants/env.constants.js";
+import { envConstants } from "../constants/env.constants.js";
 
-export default config = {
+export const config = {
   server: {
     port: envConstants.PORT,
     host: envConstants.HOST,

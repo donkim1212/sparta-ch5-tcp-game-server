@@ -1,5 +1,5 @@
 import net from "net";
-import config from "./config/config.js";
+import { config } from "./config/config.js";
 import { onConnection } from "./events/connection.event.js";
 import { initServer } from "./init/index.init.js";
 
