@@ -1,0 +1,25 @@
+{
+  "name": "sparta-ch5-tcp-game-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/donkim1212/sparta-ch5-tcp-game-server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/donkim1212/sparta-ch5-tcp-game-server/issues"
+  },
+  "homepage": "https://github.com/donkim1212/sparta-ch5-tcp-game-server#readme",
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  }
+}
