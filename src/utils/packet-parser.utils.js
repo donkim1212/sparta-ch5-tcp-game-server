@@ -39,7 +39,7 @@ const verifyClientVersion = (version) => {
 
 const decodePayload = (handlerId, payload) => {
   try {
-    const { namespace, typeName } = getProtoTypeNameByHandlerId(handlerId).split(".");
+    const [namespace, typeName] = getProtoTypeNameByHandlerId(handlerId).split(".");
     const PayloadType = protoMessages[namespace][typeName];
 
     // decode throws error on missing req fields
