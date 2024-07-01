@@ -3,4 +3,8 @@ export const protoTypeNames = {
     CommonPacket: "common.CommonPacket",
     InitialPacket: "common.InitialPacket",
   },
+  game: {
+    LocationUpdatePayload: "game.LocationUpdatePayload",
+    LocationUpdate: "game.LocationUpdate",
+  },
 };
