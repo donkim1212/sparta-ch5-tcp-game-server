@@ -6,6 +6,9 @@ export const config = {
     port: envConstants.PORT,
     host: envConstants.HOST,
   },
+  client: {
+    version: envConstants.VERSION,
+  },
   packet: {
     totalLength: headerConstants.byteSizes.TOTAL_LENGTH_BYTES,
     packetType: headerConstants.byteSizes.PACKET_TYPE_BYTES,
