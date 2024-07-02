@@ -12,7 +12,7 @@ const handlers = {
   },
   [handlerIds.LOCATION_UPDATE]: {
     handler: locationUpdateHandler,
-    protoType: protoTypeNames.game.LocationUpdate,
+    protoType: protoTypeNames.game.LocationUpdatePayload,
   },
 };
 
