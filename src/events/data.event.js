@@ -33,8 +33,9 @@ export const onData = (socket) => async (data) => {
           console.log(`NORMAL | parsed: ${parsedNormal}`, parsedNormal);
           break;
         case headerConstants.packetTypes.LOCATION:
-          const parsedLocation = parsePacket(packet);
-          console.log(`LOCATION | parsed: ${parsedLocation}`, parsedLocation);
+          // const parsedLocation = parsePacket(packet);
+          console.log("UpdateLocation");
+          // console.log(`LOCATION | parsed: ${parsedLocation}`, parsedLocation);
           break;
       }
 
