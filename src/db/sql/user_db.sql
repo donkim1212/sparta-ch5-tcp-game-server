@@ -3,8 +3,8 @@ CREATE TABLE IF NOT EXISTS user
     id         VARCHAR(36) PRIMARY KEY,
     device_id  VARCHAR(255) UNIQUE NOT NULL,
     last_login TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    x          INT DEFAULT 0,
-    y          INT DEFAULT 0,
+    x          FLOAT(10, 2) DEFAULT 0,
+    y          FLOAT(10, 2) DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
