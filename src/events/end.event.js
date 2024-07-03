@@ -2,6 +2,7 @@ import userDbQueries from "../db/user.db.js";
 import gameSessionsManager from "../session/game.session.js";
 import { userSessions } from "../session/session.js";
 import userSessionsManager from "../session/user.session.js";
+import { handleError } from "../utils/errors/error-handler.js";
 
 export const onEnd = (socket) => async () => {
   try {
@@ -16,6 +17,6 @@ export const onEnd = (socket) => async () => {
       }
     }
   } catch (err) {
-    //
+    handleError(socket, err);
   }
 };
