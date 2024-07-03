@@ -18,6 +18,7 @@ const locationUpdateHandler = async ({ socket, userId, payload }) => {
   const err = LocationUpdate.verify({ users: filteredUsers });
   if (err) {
     console.error(err);
+    return;
   }
 
   const responsePayload = LocationUpdate.encode({ users: filteredUsers }).finish();
