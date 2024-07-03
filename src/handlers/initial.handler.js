@@ -7,7 +7,10 @@ const initialHandler = async ({ socket, userId, payload }) => {
 
   const game = gameSessionsManager.getGameSession(0);
   game.addUser(userSessionsManager.addUser(deviceId, playerId, socket));
-  userDbQueries.createUser(deviceId, 0, 0);
+  /* check if deviceId exists first */
+
+  /* create user if dne */
+  await userDbQueries.createUser(deviceId, 0, 0);
 };
 
 export default initialHandler;
