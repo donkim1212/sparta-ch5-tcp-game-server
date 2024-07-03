@@ -13,4 +13,13 @@ export const config = {
     totalLength: headerConstants.byteSizes.TOTAL_LENGTH_BYTES,
     packetType: headerConstants.byteSizes.PACKET_TYPE_BYTES,
   },
+  databases: {
+    USER_DB: {
+      database: envConstants.DB_NAME,
+      host: envConstants.DB_HOST,
+      port: envConstants.DB_PORT,
+      user: envConstants.DB_USER,
+      password: envConstants.DB_PASSWORD,
+    },
+  },
 };
