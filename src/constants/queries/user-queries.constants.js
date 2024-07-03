@@ -5,7 +5,7 @@ const findUserByDeviceId = `
 `;
 
 const createUser = `
-    INSERT INTO user (id, device_id, x, y)
+    INSERT IGNORE INTO user (id, device_id, x, y)
     VALUES (?, ?, ?, ?)
 `;
 
