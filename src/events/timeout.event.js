@@ -1,3 +1,4 @@
+import userDbQueries from "../db/user.db.js";
 import gameSessionsManager from "../session/game.session.js";
 import userSessionsManager from "../session/user.session.js";
 import { handleError } from "../utils/errors/error-handler.js";
