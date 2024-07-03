@@ -10,7 +10,7 @@ const userSessionsManager = {
   removeUserByuserId: (userId) => {
     if (userSessions[userId]) {
       delete userSessions[userId];
-      console.log(`Removed user with ID ${id}`);
+      console.log(`Removed user with ID ${userId}`);
       return true;
     }
     return false;
