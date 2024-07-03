@@ -23,6 +23,14 @@ const userSessionsManager = {
   getUserByUserId: (userId) => {
     return userSessions[userId];
   },
+  getUserBySocket: (socket) => {
+    for (const [userId, user] of Object.entries(userSessions)) {
+      if (user.socket === socket) {
+        return user;
+      }
+    }
+    return null;
+  },
   getNextSequence: (userId) => {
     if (!userSessions[userId]) {
       return null;
