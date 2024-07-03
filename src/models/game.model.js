@@ -35,7 +35,7 @@ class Game {
   }
 
   removeUser(userId) {
-    this.users = this.users.filter((user) => user.id === userId);
+    this.users = this.users.filter((user) => user.id !== userId);
     this.state = "waiting";
   }
 
