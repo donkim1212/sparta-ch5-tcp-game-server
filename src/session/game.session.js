@@ -1,3 +1,4 @@
+import { gameStateConstants } from "../constants/game.constants.js";
 import Game from "../models/game.model.js";
 import { gameSessions } from "./session.js";
 
@@ -22,6 +23,23 @@ const gameSessionsManager = {
   },
   getAllGameSessions: () => {
     return gameSessions;
+  },
+  getAllWaitingGameSessionIds: () => {
+    const filteredIds = [];
+    for (const [gameId, game] of Object.keys(gameSessions)) {
+      if (game.state === gameStateConstants.WAITING) {
+        filteredIds.push(gameId);
+      }
+    }
+    return filteredIds;
+  },
+  getClosestWaitingGameSession: () => {
+    for (const [gameId, game] of Object.keys(gameSessions)) {
+      if (game.state === gameStateConstants.WAITING) {
+        return game;
+      }
+    }
+    return null;
   },
 };
 
