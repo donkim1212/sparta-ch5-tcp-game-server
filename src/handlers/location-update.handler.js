@@ -13,9 +13,6 @@ const locationUpdateHandler = async ({ socket, userId, payload }) => {
   user.updatePosition(x, y);
 
   const data = new LocationUpdateData(MAIN_GAME_ID, userId);
-  if (data.users.length === 0) {
-    return;
-  }
 
   const serialized = packetEncoder(protoTypeNames.gameNotification.LocationUpdate, data);
   const header = writeHeader(serialized.length, headerConstants.packetTypes.LOCATION);
