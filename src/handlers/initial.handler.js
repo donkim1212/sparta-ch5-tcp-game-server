@@ -6,11 +6,12 @@ import GameStartData from "../protobuf/gameNotification/game-start.proto.js";
 import { protoTypeNames } from "../constants/proto.constants.js";
 import { writeHeader } from "../utils/packet/header.utils.js";
 import { headerConstants } from "../constants/header.constants.js";
+import { MAIN_GAME_ID } from "../constants/game.constants.js";
 
 const initialHandler = async ({ socket, userId, payload }) => {
   const { deviceId, playerId } = payload; // deviceId IS userId
 
-  const game = gameSessionsManager.getGameSession(0);
+  const game = gameSessionsManager.getGameSession(MAIN_GAME_ID);
   game.addUser(userSessionsManager.addUser(deviceId, playerId, socket));
   /* check if deviceId exists first */
 
