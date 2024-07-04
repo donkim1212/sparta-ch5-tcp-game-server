@@ -1,17 +1,10 @@
-const gameStateConstants = {
-  WAITING: 0,
-  IN_PROGRESS: 1,
-};
-
-const gameConstants = {
-  MAX_PLAYERS: 4,
-};
+import { gameStateConstants, gameConstants } from "../constants/game.constants.js";
 
 class Game {
   constructor(id) {
     this.id = id;
     this.users = [];
-    this.state = "waiting";
+    this.state = gameStateConstants.WAITING;
   }
 
   addUser(user) {
@@ -35,12 +28,12 @@ class Game {
   }
 
   removeUser(userId) {
-    this.users = this.users.filter((user) => user.id === userId);
-    this.state = "waiting";
+    this.users = this.users.filter((user) => user.id !== userId);
+    this.state = gameStateConstants.WAITING;
   }
 
   startGame() {
-    this.state = "inProgress";
+    this.state = gameStateConstants.IN_PROGRESS;
   }
 }
 

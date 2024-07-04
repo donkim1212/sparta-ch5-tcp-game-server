@@ -10,7 +10,7 @@ const userSessionsManager = {
   removeUserByuserId: (userId) => {
     if (userSessions[userId]) {
       delete userSessions[userId];
-      console.log(`Removed user with ID ${id}`);
+      console.log(`Removed user with ID ${userId}`);
       return true;
     }
     return false;
@@ -22,6 +22,14 @@ const userSessionsManager = {
    */
   getUserByUserId: (userId) => {
     return userSessions[userId];
+  },
+  getUserBySocket: (socket) => {
+    for (const [userId, user] of Object.entries(userSessions)) {
+      if (user.socket === socket) {
+        return user;
+      }
+    }
+    return null;
   },
   getNextSequence: (userId) => {
     if (!userSessions[userId]) {

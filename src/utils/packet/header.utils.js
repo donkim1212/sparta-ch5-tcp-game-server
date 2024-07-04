@@ -1,4 +1,4 @@
-import { config } from "../config/config.js";
+import { config } from "../../config/config.js";
 
 /**
  * Read buffer's header and return it as an object.

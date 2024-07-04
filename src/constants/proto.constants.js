@@ -5,6 +5,12 @@ export const protoTypeNames = {
   },
   game: {
     LocationUpdatePayload: "game.LocationUpdatePayload",
-    LocationUpdate: "game.LocationUpdate",
+  },
+  gameNotification: {
+    LocationUpdate: "gameNotification.LocationUpdate",
+    GameStart: "gameNotification.GameStart",
+  },
+  response: {
+    Response: "response.Response",
   },
 };

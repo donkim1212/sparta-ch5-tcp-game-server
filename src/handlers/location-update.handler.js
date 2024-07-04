@@ -1,8 +1,10 @@
 import { headerConstants } from "../constants/header.constants.js";
-import { getProtoMessages } from "../init/proto.init.js";
-import gameSessionsManager from "../session/game.session.js";
 import userSessionsManager from "../session/user.session.js";
-import { writeHeader } from "../utils/header.utils.js";
+import { writeHeader } from "../utils/packet/header.utils.js";
+import LocationUpdateData from "../protobuf/gameNotification/location-update.proto.js";
+import packetEncoder from "../utils/packet/packet-encoder.utils.js";
+import { protoTypeNames } from "../constants/proto.constants.js";
+import { MAIN_GAME_ID } from "../constants/game.constants.js";
 
 const locationUpdateHandler = async ({ socket, userId, payload }) => {
   const { x, y } = payload;
@@ -10,19 +12,11 @@ const locationUpdateHandler = async ({ socket, userId, payload }) => {
   /* do some calculation for x, y validation here */
   user.updatePosition(x, y);
 
-  const LocationUpdate = getProtoMessages().game.LocationUpdate;
-  const game = gameSessionsManager.getGameSession(0);
+  const data = new LocationUpdateData(MAIN_GAME_ID, userId);
 
-  const filteredUsers = game.getAllUsers().filter((user) => user.id !== userId);
-
-  const err = LocationUpdate.verify({ users: filteredUsers });
-  if (err) {
-    console.error(err);
-  }
-
-  const responsePayload = LocationUpdate.encode({ users: filteredUsers }).finish();
-  const header = writeHeader(responsePayload.length, headerConstants.packetTypes.LOCATION);
-  return Buffer.concat([header, responsePayload]);
+  const serialized = packetEncoder(protoTypeNames.gameNotification.LocationUpdate, data);
+  const header = writeHeader(serialized.length, headerConstants.packetTypes.LOCATION);
+  return Buffer.concat([header, serialized]);
 };
 
 export default locationUpdateHandler;

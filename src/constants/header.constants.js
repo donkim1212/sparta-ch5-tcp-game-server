@@ -6,6 +6,7 @@ export const headerConstants = {
   packetTypes: {
     PING: 0,
     NORMAL: 1,
+    GAME_START: 2,
     LOCATION: 3,
   },
 };

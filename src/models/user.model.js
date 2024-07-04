@@ -1,3 +1,7 @@
+import { errorCodes } from "../constants/error.constants.js";
+import gameSessionsManager from "../session/game.session.js";
+import CustomError from "../utils/errors/classes/custom.error.js";
+
 class User {
   constructor(id, playerId, socket) {
     this.id = id;
@@ -17,6 +21,19 @@ class User {
 
   getNextSequence() {
     return ++this.sequence;
+  }
+
+  joinGame(gameId) {
+    const game = gameSessionsManager.getGameSession(gameId);
+    if (!game) {
+      throw new CustomError(errorCodes.GAME_NOT_FOUND, `Can't join game: ID ${gameId}`);
+    }
+
+    this.gameId = gameId;
+  }
+
+  leaveGame() {
+    this.gameId = null;
   }
 }
 
