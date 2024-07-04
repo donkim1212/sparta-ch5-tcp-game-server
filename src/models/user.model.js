@@ -1,6 +1,9 @@
 import { errorCodes } from "../constants/error.constants.js";
+import { protoTypeNames } from "../constants/proto.constants.js";
 import gameSessionsManager from "../session/game.session.js";
 import CustomError from "../utils/errors/classes/custom.error.js";
+import { serialize } from "../utils/packet/packet-encoder.utils.js";
+import PingData from "../protobuf/common/ping.proto.js";
 
 class User {
   constructor(id, playerId, socket) {
@@ -21,6 +24,17 @@ class User {
 
   getNextSequence() {
     return ++this.sequence;
+  }
+
+  ping() {
+    const now = Date.now();
+    console.log(`[${this.id}] ping`);
+    this.socket.write(serialize(protoTypeNames.common.Ping, new PingData(now)));
+  }
+
+  handlePong(data) {
+    const now = Date.now();
+    this.latency = (now - data.timestamp) / 2;
   }
 
   joinGame(gameId) {
