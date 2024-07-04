@@ -96,7 +96,7 @@ public class GameStart {
     public string gameId { get; set; }
     
     [ProtoMember(2)]
-    public uint timestamp { get; set; }
+    public ulong timestamp { get; set; }
 
     [ProtoMember(3)]
     public float x { get; set; }
@@ -114,7 +114,7 @@ public class Response {
     public uint responseCode { get; set; }
 
     [ProtoMember(3)]
-    public long timestamp { get; set; }
+    public ulong timestamp { get; set; }
 
     [ProtoMember(4)]
     public byte[] data { get; set; }

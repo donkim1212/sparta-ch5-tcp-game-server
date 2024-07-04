@@ -15,7 +15,7 @@ message LocationUpdate {
 
 message GameStart {
     string gameId = 1;
-    uint32 timestamp = 2;
+    uint64 timestamp = 2;
     float x = 3;
     float y = 4;
 }
