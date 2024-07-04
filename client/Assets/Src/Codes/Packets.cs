@@ -7,7 +7,7 @@ using System;
 
 public class Packets : MonoBehaviour
 {
-    public enum PacketType { Ping, Normal, Location = 3 }
+    public enum PacketType { Ping, Normal, GameStart, Location = 3 }
     public enum HandlerIds {
         Init = 0,
         LocationUpdate = 2 
@@ -88,6 +88,21 @@ public class LocationUpdate
         [ProtoMember(4)]
         public float y { get; set; }
     }
+}
+
+[ProtoContract]
+public class GameStart {
+    [ProtoMember(1)]
+    public string gameId { get; set; }
+    
+    [ProtoMember(2)]
+    public uint timestamp { get; set; }
+
+    [ProtoMember(3)]
+    public float x { get; set; }
+
+    [ProtoMember(4)]
+    public float y { get; set; }
 }
 
 [ProtoContract]
