@@ -1,8 +1,8 @@
-import { config } from "../config/config.js";
-import { getProtoMessages } from "../init/proto.init.js";
-import CustomError from "./errors/classes/custom.error.js";
-import { errorCodes } from "../constants/error.constants.js";
-import { getProtoTypeNameByHandlerId } from "../handlers/index.js";
+import { config } from "../../config/config.js";
+import { getProtoMessages } from "../../init/proto.init.js";
+import CustomError from "../errors/classes/custom.error.js";
+import { errorCodes } from "../../constants/error.constants.js";
+import { getProtoTypeNameByHandlerId } from "../../handlers/index.js";
 import protobuf from "protobufjs";
 
 const protoMessages = getProtoMessages();
