@@ -1,5 +1,6 @@
 export const protoTypeNames = {
   common: {
+    Ping: "common.Ping",
     CommonPacket: "common.CommonPacket",
     InitialPacket: "common.InitialPacket",
   },
