@@ -1,7 +1,7 @@
 import { config } from "../config/config.js";
 import { headerConstants } from "../constants/header.constants.js";
 import { handleError } from "../utils/errors/error-handler.js";
-import { parsePacket } from "../utils/packet-parser.utils.js";
+import { parsePacket } from "../utils/packet/packet-parser.utils.js";
 import { getHandlerByHandlerId } from "../handlers/index.js";
 
 const headerSize = config.packet.totalLength + config.packet.packetType;
