@@ -17,7 +17,7 @@ const packetEncoder = (type, data) => {
     console.error(errMessage);
     throw new CustomError(errorCodes.PACKET_STRUCTURE_MISMATCH, "Error on verifying packet.");
   }
-  const encoded = PayloadType.encode(data);
+  const encoded = PayloadType.encode(data).finish();
 
   return encoded;
 };
