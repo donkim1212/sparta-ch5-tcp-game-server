@@ -2,6 +2,7 @@ using System;
 using System.Buffers;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,9 +43,11 @@ public class NetworkManager : MonoBehaviour
                     GameManager.instance.deviceId = GenerateUniqueID();
                 }
             }
+            GameManager.instance.playerId = (uint)UnityEngine.Random.Range(0, 4);
   
             if (ConnectToServer(ip, portNumber)) {
-                StartGame();
+                Init();
+                // StartGame();
             } else {
                 AudioManager.instance.PlaySfx(AudioManager.Sfx.LevelUp);
                 StartCoroutine(NoticeRoutine(1));
@@ -89,13 +92,16 @@ public class NetworkManager : MonoBehaviour
         return System.Guid.NewGuid().ToString();
     }
 
+    void Init() {
+        StartReceiving(); // Start receiving data
+        SendInitialPacket();
+    }
+
     void StartGame()
     {
         // 게임 시작 코드 작성
         Debug.Log("Game Started");
-        StartReceiving(); // Start receiving data
         GameManager.instance.GameStart();
-        SendInitialPacket();
     }
 
     IEnumerator NoticeRoutine(int index) {
@@ -235,6 +241,9 @@ public class NetworkManager : MonoBehaviour
                 case Packets.PacketType.Normal:
                     HandleNormalPacket(packetData);
                     break;
+                case Packets.PacketType.GameStart:
+                    HandleGameStartPacket(packetData);
+                    break;
                 case Packets.PacketType.Location:
                     HandleLocationPacket(packetData);
                     break;
@@ -256,6 +265,27 @@ public class NetworkManager : MonoBehaviour
         if (response.data != null && response.data.Length > 0) {
             ProcessResponseData(response.data);
         }
+    }
+
+    void HandleGameStartPacket (byte[] data) {
+        try {
+            GameStart response;
+
+            if (data.Length > 0) {
+                // 패킷 데이터 처리
+                response = Packets.Deserialize<GameStart>(data);
+            } else {
+                // data가 비어있을 경우 초기 화면으로 이동
+                GameManager.instance.GameRetry();
+                return;
+            }
+            Vector3 newPos = new Vector3(response.x, response.y, 0);
+            GameManager.instance.player.transform.position = newPos;
+            StartGame();
+        } catch (Exception e) {
+            Debug.LogError($"Error HandleGameStartPacket: {e.Message}");
+        }
+        
     }
 
     void ProcessResponseData(byte[] data) {
