@@ -2,8 +2,8 @@ import User from "../models/user.model.js";
 import { userSessions } from "./session.js";
 
 const userSessionsManager = {
-  addUser: (uuid, playerId, socket) => {
-    const user = new User(uuid, playerId, socket);
+  addUser: (uuid, playerId, socket, speed) => {
+    const user = new User(uuid, playerId, socket, speed);
     userSessions[uuid] = user;
     return user;
   },

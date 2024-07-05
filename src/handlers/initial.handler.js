@@ -9,9 +9,8 @@ import { headerConstants } from "../constants/header.constants.js";
 import { MAIN_GAME_ID } from "../constants/game.constants.js";
 
 const initialHandler = async ({ socket, userId, payload }) => {
-  const { deviceId, playerId } = payload; // deviceId IS userId
-
-  const user = userSessionsManager.addUser(deviceId, playerId, socket);
+  const { deviceId, playerId, latency, speed } = payload; // deviceId IS userId
+  const user = userSessionsManager.addUser(deviceId, playerId, socket, speed);
   /* check if deviceId exists first */
 
   /* create user if dne */

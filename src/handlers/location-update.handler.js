@@ -7,10 +7,11 @@ import { protoTypeNames } from "../constants/proto.constants.js";
 import { MAIN_GAME_ID } from "../constants/game.constants.js";
 
 const locationUpdateHandler = async ({ socket, userId, payload }) => {
-  const { x, y } = payload;
+  const { x, y, inputX, inputY } = payload;
+  // console.log("x:", x, " y:", y, " inputX:", inputX, " inputY:", inputY);
   const user = userSessionsManager.getUserByUserId(userId);
   /* do some calculation for x, y validation here */
-  user.updatePosition(x, y);
+  user.updatePosition(x, y, inputX, inputY);
 
   const data = new LocationUpdateData(MAIN_GAME_ID, userId);
 
