@@ -98,7 +98,7 @@ public class LocationUpdate
 }
 
 [ProtoContract]
-public class GameStart {
+public class InitialResponse {
     [ProtoMember(1)]
     public string gameId { get; set; }
     

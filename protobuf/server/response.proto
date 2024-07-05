@@ -8,3 +8,10 @@ message Response {
     uint64 timestamp = 3;
     bytes data = 4;
 }
+
+message InitialResponse {
+    string gameId = 1;
+    uint64 timestamp = 2;
+    float x = 3;
+    float y = 4;
+}

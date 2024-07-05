@@ -242,7 +242,7 @@ public class NetworkManager : MonoBehaviour
                     HandleNormalPacket(packetData);
                     break;
                 case Packets.PacketType.GameStart:
-                    HandleGameStartPacket(packetData);
+                    HandleInitialResponsePacket(packetData);
                     break;
                 case Packets.PacketType.Location:
                     HandleLocationPacket(packetData);
@@ -267,13 +267,13 @@ public class NetworkManager : MonoBehaviour
         }
     }
 
-    void HandleGameStartPacket (byte[] data) {
+    void HandleInitialResponsePacket (byte[] data) {
         try {
-            GameStart response;
+            InitialResponse response;
 
             if (data.Length > 0) {
                 // 패킷 데이터 처리
-                response = Packets.Deserialize<GameStart>(data);
+                response = Packets.Deserialize<InitialResponse>(data);
             } else {
                 // data가 비어있을 경우 초기 화면으로 이동
                 GameManager.instance.GameRetry();
@@ -283,7 +283,7 @@ public class NetworkManager : MonoBehaviour
             GameManager.instance.player.transform.position = newPos;
             StartGame();
         } catch (Exception e) {
-            Debug.LogError($"Error HandleGameStartPacket: {e.Message}");
+            Debug.LogError($"Error HandleInitialResponsePacket: {e.Message}");
         }
         
     }

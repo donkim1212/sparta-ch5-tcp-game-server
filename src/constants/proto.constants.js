@@ -9,9 +9,9 @@ export const protoTypeNames = {
   },
   gameNotification: {
     LocationUpdate: "gameNotification.LocationUpdate",
-    GameStart: "gameNotification.GameStart",
   },
   response: {
     Response: "response.Response",
+    InitialResponse: "response.InitialResponse",
   },
 };

@@ -12,10 +12,3 @@ message LocationUpdate {
         float y = 4;
     }
 }
-
-message GameStart {
-    string gameId = 1;
-    uint64 timestamp = 2;
-    float x = 3;
-    float y = 4;
-}
