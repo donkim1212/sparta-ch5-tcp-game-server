@@ -7,10 +7,10 @@ import { writeHeader } from "./header.utils.js";
  *
  * @param {string} type name of proto message, e.g., 'common.CommonPacket'
  * @param {Object} data to be encoded
- * @param {number} headerTypeName one of protoTypeNames.packageName.typeNames
+ * @param {number} headerType one of protoTypeNames.packageName.typeNames
  * @returns packet encoded using protobuf message
  */
-export const serialize = (type, data, headerTypeName) => {
+export const serialize = (type, data, headerType) => {
   const [namespace, typeName] = type.split(".");
   const PayloadType = getProtoMessages()[namespace][typeName];
 
@@ -20,8 +20,8 @@ export const serialize = (type, data, headerTypeName) => {
     throw new CustomError(errorCodes.PACKET_STRUCTURE_MISMATCH, "Error on verifying packet.");
   }
   const encoded = PayloadType.encode(data).finish();
-  if (headerTypeName) {
-    const header = writeHeader(encoded.length, headerTypeName);
+  if (headerType) {
+    const header = writeHeader(encoded.length, headerType);
     return Buffer.concat([header, encoded]);
   }
 

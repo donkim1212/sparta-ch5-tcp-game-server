@@ -4,6 +4,7 @@ import gameSessionsManager from "../session/game.session.js";
 import CustomError from "../utils/errors/classes/custom.error.js";
 import { serialize } from "../utils/packet/packet-encoder.utils.js";
 import PingData from "../protobuf/common/ping.proto.js";
+import { headerConstants } from "../constants/header.constants.js";
 
 class User {
   constructor(id, playerId, socket) {
@@ -29,7 +30,8 @@ class User {
   ping() {
     const now = Date.now();
     console.log(`[${this.id}] ping`);
-    this.socket.write(serialize(protoTypeNames.common.Ping, new PingData(now)));
+    const pingPacket = serialize(protoTypeNames.common.Ping, new PingData(now), headerConstants.packetTypes.PING);
+    this.socket.write(pingPacket);
   }
 
   handlePong(data) {
@@ -37,18 +39,18 @@ class User {
     this.latency = (now - data.timestamp) / 2;
   }
 
-  joinGame(gameId) {
-    const game = gameSessionsManager.getGameSession(gameId);
-    if (!game) {
-      throw new CustomError(errorCodes.GAME_NOT_FOUND, `Can't join game: ID ${gameId}`);
-    }
+  // joinGame(gameId) {
+  //   const game = gameSessionsManager.getGameSession(gameId);
+  //   if (!game) {
+  //     throw new CustomError(errorCodes.GAME_NOT_FOUND, `Can't join game: ID ${gameId}`);
+  //   }
 
-    this.gameId = gameId;
-  }
+  //   this.gameId = gameId;
+  // }
 
-  leaveGame() {
-    this.gameId = null;
-  }
+  // leaveGame() {
+  //   this.gameId = null;
+  // }
 }
 
 export default User;
