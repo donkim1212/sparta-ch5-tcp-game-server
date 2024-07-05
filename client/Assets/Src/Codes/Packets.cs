@@ -31,6 +31,13 @@ public class Packets : MonoBehaviour
 }
 
 [ProtoContract]
+public class Ping
+{
+    [ProtoMember(1)]
+    public ulong timestamp { get; set; }
+}
+
+[ProtoContract]
 public class InitialPayload
 {
     [ProtoMember(1, IsRequired = true)]
