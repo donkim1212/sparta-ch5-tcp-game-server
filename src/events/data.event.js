@@ -3,6 +3,10 @@ import { headerConstants } from "../constants/header.constants.js";
 import { handleError } from "../utils/errors/error-handler.js";
 import { parsePacket } from "../utils/packet/packet-parser.utils.js";
 import { getHandlerByHandlerId } from "../handlers/index.js";
+import { deserialize } from "../utils/packet/packet-encoder.utils.js";
+import { protoTypeNames } from "../constants/proto.constants.js";
+import userSessionsManager from "../session/user.session.js";
+import { errorCodes } from "../constants/error.constants.js";
 
 const headerSize = config.packet.totalLength + config.packet.packetType;
 
@@ -20,19 +24,22 @@ export const onData = (socket) => async (data) => {
       }
 
       const packetType = socket.buffer.readIntBE(config.packet.totalLength, config.packet.packetType);
-      // console.log("=====PACKET TYPE:", packetType);
-      // remove completed packet from buffer
+
       const packet = socket.buffer.subarray(headerSize, socket.buffer.nextTotalLength);
       socket.buffer = socket.buffer.subarray(socket.buffer.nextTotalLength);
 
       switch (packetType) {
         case headerConstants.packetTypes.PING: {
-          console.log(`PING`);
+          const decoded = deserialize(protoTypeNames.common.Ping, packet);
+          const user = userSessionsManager.getUserBySocket(socket);
+          if (!user) {
+            throw new CustomError(errorCodes.USER_NOT_FOUND, `User not found.`);
+          }
+          user.handlePong(decoded);
           break;
         }
         case headerConstants.packetTypes.NORMAL: {
           const parsed = parsePacket(packet);
-          // console.log(`NORMAL | parsed: ${parsed}`, parsed);
 
           const handler = getHandlerByHandlerId(parsed.handlerId);
 
@@ -42,15 +49,7 @@ export const onData = (socket) => async (data) => {
           }
           break;
         }
-        case headerConstants.packetTypes.LOCATION: {
-          // const parsedLocation = parsePacket(packet);
-          console.log("UpdateLocation");
-          // console.log(`LOCATION | parsed: ${parsedLocation}`, parsedLocation);
-          break;
-        }
       }
-
-      socket.buffer.nextTotalLength = 0;
     }
   } catch (err) {
     handleError(socket, err);

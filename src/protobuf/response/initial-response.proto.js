@@ -1,4 +1,4 @@
-class GameStartData {
+class InitialResponseData {
   constructor(gameId, x, y) {
     (this.gameId = gameId), (this.timestamp = Date.now());
     this.x = x;
@@ -6,4 +6,4 @@ class GameStartData {
   }
 }
 
-export default GameStartData;
+export default InitialResponseData;

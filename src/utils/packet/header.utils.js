@@ -1,4 +1,5 @@
 import { config } from "../../config/config.js";
+const headerSize = config.packet.totalLength + config.packet.packetType;
 
 /**
  * Read buffer's header and return it as an object.
@@ -12,6 +13,12 @@ export const readHeader = (buffer) => {
   };
 };
 
+export const detachHeader = (buffer) => {
+  const header = buffer.subarray(0, headerSize);
+  buffer = buffer.subarray(headerSize, buffer.length);
+  return [readHeader(header), buffer];
+};
+
 /**
  * Construct a header Buffer with given information.
  * @param {Number} length length of packet's data
@@ -19,7 +26,6 @@ export const readHeader = (buffer) => {
  * @returns header as a Buffer
  */
 export const writeHeader = (length, packetType) => {
-  const headerSize = config.packet.totalLength + config.packet.packetType;
   const buffer = Buffer.alloc(headerSize);
   buffer.writeIntBE(length + headerSize, 0, config.packet.totalLength);
   buffer.writeIntBE(packetType, config.packet.totalLength, config.packet.packetType);

@@ -31,6 +31,13 @@ public class Packets : MonoBehaviour
 }
 
 [ProtoContract]
+public class Ping
+{
+    [ProtoMember(1)]
+    public ulong timestamp { get; set; }
+}
+
+[ProtoContract]
 public class InitialPayload
 {
     [ProtoMember(1, IsRequired = true)]
@@ -91,12 +98,12 @@ public class LocationUpdate
 }
 
 [ProtoContract]
-public class GameStart {
+public class InitialResponse {
     [ProtoMember(1)]
     public string gameId { get; set; }
     
     [ProtoMember(2)]
-    public uint timestamp { get; set; }
+    public ulong timestamp { get; set; }
 
     [ProtoMember(3)]
     public float x { get; set; }
@@ -114,7 +121,7 @@ public class Response {
     public uint responseCode { get; set; }
 
     [ProtoMember(3)]
-    public long timestamp { get; set; }
+    public ulong timestamp { get; set; }
 
     [ProtoMember(4)]
     public byte[] data { get; set; }
