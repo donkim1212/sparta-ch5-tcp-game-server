@@ -45,6 +45,13 @@ class Game {
     return max;
   }
 
+  getAllUserLocations() {
+    return this.users.map((user) => {
+      const { x, y } = user.calculateNextPosition();
+      return { id: user.id, playerId: user.playerId, x, y };
+    });
+  }
+
   startGame() {
     this.state = gameStateConstants.IN_PROGRESS;
   }

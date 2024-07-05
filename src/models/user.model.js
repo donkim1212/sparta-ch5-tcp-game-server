@@ -4,29 +4,44 @@ import PingData from "../protobuf/common/ping.proto.js";
 import { headerConstants } from "../constants/header.constants.js";
 
 class User {
-  constructor(id, playerId, socket) {
+  constructor(id, playerId, socket, speed) {
     this.id = id;
     this.playerId = playerId;
     this.socket = socket;
+    this.speed = speed;
     this.x = 0;
     this.y = 0;
     this.sequence = 0;
     this.updatedAt = Date.now();
   }
 
-  updatePosition(x, y) {
+  updatePosition(x, y, inputX, inputY) {
     this.x = x;
     this.y = y;
+    this.inputX = inputX;
+    this.inputY = inputY;
     this.updatedAt = Date.now();
   }
 
   calculateNextPosition() {
-    // speed * time = distance
+    // distance = speed * time
+    const time = this.latency / 1000; // latency in seconds
+    const distance = this.speed * time;
+
     // angle can be obtained through input vector
-    // cos(angle) * dist = dx;
-    // sin(angle) * dist = dy;
+    const theta = this.calculateTheta();
+
+    // dx = cos(angle) * distance
+    const dx = Math.cos(theta) * distance;
+    // dy = sin(angle) * distance
+    const dy = Math.sin(theta) * distance;
     // nextX = this.x + dx;
     // nextY = this.y + dy;
+    return { x: this.x + dx, y: this.y + dy };
+  }
+
+  calculateTheta() {
+    return Math.atan2(this.inputY, this.inputX);
   }
 
   getNextSequence() {
