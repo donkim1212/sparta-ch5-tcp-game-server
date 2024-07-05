@@ -1,7 +1,4 @@
-import { errorCodes } from "../constants/error.constants.js";
 import { protoTypeNames } from "../constants/proto.constants.js";
-import gameSessionsManager from "../session/game.session.js";
-import CustomError from "../utils/errors/classes/custom.error.js";
 import { serialize } from "../utils/packet/packet-encoder.utils.js";
 import PingData from "../protobuf/common/ping.proto.js";
 import { headerConstants } from "../constants/header.constants.js";
@@ -29,14 +26,16 @@ class User {
 
   ping() {
     const now = Date.now();
-    console.log(`[${this.id}] ping`);
+    console.log(`[${this.id}] PING`);
     const pingPacket = serialize(protoTypeNames.common.Ping, new PingData(now), headerConstants.packetTypes.PING);
+
     this.socket.write(pingPacket);
   }
 
   handlePong(data) {
     const now = Date.now();
     this.latency = (now - data.timestamp) / 2;
+    console.log(`[${this.id}] PONG: ${this.latency}ms`);
   }
 
   // joinGame(gameId) {
