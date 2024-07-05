@@ -24,8 +24,7 @@ export const onData = (socket) => async (data) => {
       }
 
       const packetType = socket.buffer.readIntBE(config.packet.totalLength, config.packet.packetType);
-      // console.log("=====PACKET TYPE:", packetType);
-      // remove completed packet from buffer
+
       const packet = socket.buffer.subarray(headerSize, socket.buffer.nextTotalLength);
       socket.buffer = socket.buffer.subarray(socket.buffer.nextTotalLength);
 
@@ -41,7 +40,6 @@ export const onData = (socket) => async (data) => {
         }
         case headerConstants.packetTypes.NORMAL: {
           const parsed = parsePacket(packet);
-          // console.log(`NORMAL | parsed: ${parsed}`, parsed);
 
           const handler = getHandlerByHandlerId(parsed.handlerId);
 
@@ -52,8 +50,6 @@ export const onData = (socket) => async (data) => {
           break;
         }
       }
-
-      socket.buffer.nextTotalLength = 0;
     }
   } catch (err) {
     handleError(socket, err);
