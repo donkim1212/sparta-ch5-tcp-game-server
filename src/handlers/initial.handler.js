@@ -2,7 +2,7 @@ import gameSessionsManager from "../session/game.session.js";
 import userSessionsManager from "../session/user.session.js";
 import userDbQueries from "../db/user.db.js";
 import { serialize } from "../utils/packet/packet-encoder.utils.js";
-import InitialResponseData from "../protobuf/gameNotification/game-start.proto.js";
+import InitialResponseData from "../protobuf/response/initial-response.proto.js";
 import { protoTypeNames } from "../constants/proto.constants.js";
 import { writeHeader } from "../utils/packet/header.utils.js";
 import { headerConstants } from "../constants/header.constants.js";
