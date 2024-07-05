@@ -238,6 +238,9 @@ public class NetworkManager : MonoBehaviour
 
             switch (packetType)
             {
+                case Packets.PacketType.Ping:
+                    HandlePingPacket(packetData);
+                    break;
                 case Packets.PacketType.Normal:
                     HandleNormalPacket(packetData);
                     break;
@@ -249,6 +252,30 @@ public class NetworkManager : MonoBehaviour
                     break;
             }
         }
+    }
+
+    void Pong() {
+        Ping ping = new Ping {
+            timestamp = (ulong) DateTimeOffset.Now.ToUnixTimeMilliseconds()
+        };
+        
+        var bufferWriter = new ArrayBufferWriter<byte>();
+        Packets.Serialize<Ping>(bufferWriter, ping);
+        byte[] data = bufferWriter.WrittenSpan.ToArray();
+
+        byte[] header = CreatePacketHeader(data.Length, Packets.PacketType.Ping);
+
+        byte[] packet = new byte[header.Length + data.Length];
+        Array.Copy(header, 0, packet, 0, header.Length);
+        Array.Copy(data, 0, packet, header.Length, data.Length);
+
+        stream.Write(packet, 0, packet.Length);
+    }
+
+    void HandlePingPacket(byte[] packetData) {
+        // 패킷 데이터 처리
+        var response = Packets.Deserialize<Ping>(packetData);
+        Pong();
     }
 
     void HandleNormalPacket(byte[] packetData) {
