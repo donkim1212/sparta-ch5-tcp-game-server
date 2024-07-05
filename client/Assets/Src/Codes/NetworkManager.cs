@@ -179,6 +179,7 @@ public class NetworkManager : MonoBehaviour
             deviceId = GameManager.instance.deviceId,
             playerId = GameManager.instance.playerId,
             latency = GameManager.instance.latency,
+            speed = GameManager.instance.player.speed,
         };
 
         // handlerId는 0으로 가정
@@ -190,8 +191,10 @@ public class NetworkManager : MonoBehaviour
         {
             x = x,
             y = y,
+            inputX = GameManager.instance.player.inputVec.x,
+            inputY = GameManager.instance.player.inputVec.y,
         };
-
+        
         SendPacket(locationUpdatePayload, (uint)Packets.HandlerIds.LocationUpdate);
     }
 
