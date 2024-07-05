@@ -1,4 +1,5 @@
 import { errorCodes } from "../../constants/error.constants.js";
+import { headerConstants } from "../../constants/header.constants.js";
 import { getProtoMessages } from "../../init/proto.init.js";
 import CustomError from "../errors/classes/custom.error.js";
 import { writeHeader } from "./header.utils.js";
@@ -20,7 +21,7 @@ export const serialize = (type, data, headerType) => {
     throw new CustomError(errorCodes.PACKET_STRUCTURE_MISMATCH, "Error on verifying packet.");
   }
   const encoded = PayloadType.encode(data).finish();
-  if (headerType) {
+  if (headerType !== undefined && Object.values(headerConstants.packetTypes).includes(headerType)) {
     const header = writeHeader(encoded.length, headerType);
     return Buffer.concat([header, encoded]);
   }
