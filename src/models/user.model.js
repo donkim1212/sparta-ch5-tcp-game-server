@@ -2,6 +2,9 @@ import { protoTypeNames } from "../constants/proto.constants.js";
 import { serialize } from "../utils/packet/packet-encoder.utils.js";
 import PingData from "../protobuf/common/ping.proto.js";
 import { headerConstants } from "../constants/header.constants.js";
+import CustomError from "../utils/errors/classes/custom.error.js";
+import { errorCodes } from "../constants/error.constants.js";
+import { handleError } from "../utils/errors/error-handler.js";
 
 class User {
   constructor(id, playerId, socket, speed) {
@@ -49,11 +52,18 @@ class User {
   }
 
   ping() {
-    const now = Date.now();
-    console.log(`[${this.id}] PING`);
-    const pingPacket = serialize(protoTypeNames.common.Ping, new PingData(now), headerConstants.packetTypes.PING);
+    try {
+      const now = Date.now();
+      if (now - this.updatedAt > 10000) {
+        throw new CustomError(errorCodes.SOCKET_ERROR, `Socket timeout: ${[this.id]}`);
+      }
+      console.log(`[${this.id}] PING`);
+      const pingPacket = serialize(protoTypeNames.common.Ping, new PingData(now), headerConstants.packetTypes.PING);
 
-    this.socket.write(pingPacket);
+      this.socket.write(pingPacket);
+    } catch (err) {
+      handleError(this.socket, err);
+    }
   }
 
   handlePong(data) {
