@@ -20,6 +20,15 @@ class User {
     this.updatedAt = Date.now();
   }
 
+  calculateNextPosition() {
+    // speed * time = distance
+    // angle can be obtained through input vector
+    // cos(angle) * dist = dx;
+    // sin(angle) * dist = dy;
+    // nextX = this.x + dx;
+    // nextY = this.y + dy;
+  }
+
   getNextSequence() {
     return ++this.sequence;
   }

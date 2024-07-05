@@ -37,6 +37,14 @@ class Game {
     this.state = gameStateConstants.WAITING;
   }
 
+  getMaxLatency() {
+    let max = 0;
+    this.users.forEach((user) => {
+      max = Math.max(max, user.latency);
+    });
+    return max;
+  }
+
   startGame() {
     this.state = gameStateConstants.IN_PROGRESS;
   }
