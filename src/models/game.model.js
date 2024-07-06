@@ -1,5 +1,6 @@
 import { gameStateConstants, gameConstants } from "../constants/game.constants.js";
 import IntervalManager from "../managers/interval.manager.js";
+import { PING_INTERVAL } from "../constants/ping.constants.js";
 
 class Game {
   constructor(id) {
@@ -15,7 +16,7 @@ class Game {
     }
     this.users.push(user);
 
-    this.intervalManager.addPlayer(user.id, user.ping.bind(user), 1000);
+    this.intervalManager.addPlayer(user.id, user.ping.bind(user), PING_INTERVAL);
     // if (this.users.length === gameConstants.MAX_PLAYERS) {
     //   setTimeout(() => {
     //     this.startGame();
