@@ -46,8 +46,9 @@ class Game {
   }
 
   getAllUserLocations() {
+    const maxLatency = this.getMaxLatency();
     return this.users.map((user) => {
-      const { x, y } = user.calculateNextPosition();
+      const { x, y } = user.calculateNextPosition(maxLatency);
       return { id: user.id, playerId: user.playerId, x, y };
     });
   }

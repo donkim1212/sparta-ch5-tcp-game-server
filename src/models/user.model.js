@@ -26,9 +26,9 @@ class User {
     this.updatedAt = Date.now();
   }
 
-  calculateNextPosition() {
+  calculateNextPosition(latency) {
     // distance = speed * time
-    const time = this.latency / 1000; // latency in seconds
+    const time = latency / 1000; // latency in seconds
     const distance = this.speed * time;
 
     // angle can be obtained through input vector
