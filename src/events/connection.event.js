@@ -3,7 +3,7 @@ import { onEnd } from "./end.event.js";
 import { onError } from "./error.event.js";
 // import { onTimeout } from "./timeout.event.js";
 
-export const onConnection = (socket) => {
+export const onConnection = async (socket) => {
   console.log(`Client connected: ${socket.remoteAddress}:${socket.remotePort}`);
 
   socket.buffer = Buffer.alloc(0);
