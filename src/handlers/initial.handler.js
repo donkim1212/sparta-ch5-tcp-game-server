@@ -10,19 +10,21 @@ import { MAIN_GAME_ID } from "../constants/game.constants.js";
 
 const initialHandler = async ({ socket, userId, payload }) => {
   const { deviceId, playerId, latency, speed } = payload; // deviceId IS userId
-  const user = userSessionsManager.addUser(deviceId, playerId, socket, speed);
   /* check if deviceId exists first */
-
-  /* create user if dne */
-  await userDbQueries.createUser(deviceId, 0, 0);
   const userData = await userDbQueries.findUserByDeviceId(deviceId);
+  /* create user if dne */
+  if (!userData) {
+    await userDbQueries.createUser(deviceId, 0, 0);
+  }
+  const user = userSessionsManager.addUser(deviceId, playerId, socket, speed);
+  user.updatePosition(userData ? userData.x : 0, userData ? userData.y : 0, 0, 0);
 
   const game = gameSessionsManager.getGameSession(MAIN_GAME_ID);
+  game.addUser(user);
 
   const data = new InitialResponseData(game.id, userData.x, userData.y);
   const serialized = serialize(protoTypeNames.response.InitialResponse, data);
   const header = writeHeader(serialized.length, headerConstants.packetTypes.GAME_START);
-  game.addUser(user);
   return Buffer.concat([header, serialized]);
 };
 
