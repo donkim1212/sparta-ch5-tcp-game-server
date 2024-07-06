@@ -51,21 +51,26 @@ public class Player : MonoBehaviour
         NetworkManager.instance.SendLocationUpdatePacket(rigid.position.x, rigid.position.y);
     }
 
-
-    void FixedUpdate() {
-        if (!GameManager.instance.isLive) {
-            return;
-        }
-        // 힘을 준다.
-        // rigid.AddForce(inputVec);
-
-        // 속도 제어
-        // rigid.velocity = inputVec;
-
-        // 위치 이동
-        Vector2 nextVec = inputVec * speed * Time.fixedDeltaTime;
-        rigid.MovePosition(rigid.position + nextVec);
+    public void MoveToNextPosition(Vector2 nextVec) {
+        // rigid.MovePosition(rigid.position + nextVec);
+        rigid.MovePosition(nextVec);
     }
+
+
+    // void FixedUpdate() {
+    //     if (!GameManager.instance.isLive) {
+    //         return;
+    //     }
+    //     // 힘을 준다.
+    //     // rigid.AddForce(inputVec);
+
+    //     // 속도 제어
+    //     // rigid.velocity = inputVec;
+
+    //     // 위치 이동
+    //     // Vector2 nextVec = inputVec * speed * Time.fixedDeltaTime;
+    //     // rigid.MovePosition(rigid.position + nextVec);
+    // }
 
     // Update가 끝난이후 적용
     void LateUpdate() {
