@@ -16,30 +16,32 @@ class User {
     this.speed = speed;
     this.x = 0;
     this.y = 0;
+    this.dt = 0;
     this.inputX = 0;
     this.inputY = 0;
     this.sequence = 0;
     this.updatedAt = Date.now();
   }
 
-  updatePosition(x, y, inputX, inputY) {
+  updatePosition(x, y) {
     this.x = x;
     this.y = y;
-    this.inputX = inputX;
-    this.inputY = inputY;
     this.updatedAt = Date.now();
   }
 
   updateInputVector(inputX, inputY) {
     this.inputX = inputX;
     this.inputY = inputY;
-    this.updatedAt = Date.now();
+
+    const now = Date.now();
+    this.dt = (now - this.updatedAt) / 1000;
+    this.updatedAt = now;
+    // this.updatedAt = Date.now();
   }
 
-  calculateNextPosition(latency) {
+  calculateNextPosition(t, save) {
     // distance = speed * time
-    const time = (latency <= 1 ? 1 : latency) / 1000; // latency in seconds
-    const distance = this.speed * time;
+    const distance = this.speed * t;
 
     // angle can be obtained through input vector
     if (this.inputX === 0 && this.inputY === 0) {
@@ -49,12 +51,17 @@ class User {
 
     // dx = cos(angle) * distance
     const dx = Math.cos(theta) * distance;
-    // console.log("-- theta:", theta, " | cos:", Math.cos(theta), " | sin:", Math.sin(theta), " | dx:", dx);
+
     // dy = sin(angle) * distance
     const dy = Math.sin(theta) * distance;
-    this.x += dx;
-    this.y += dy;
-    return { x: this.x, y: this.y };
+
+    if (save) {
+      this.x += dx;
+      this.y += dy;
+      return { x: this.x, y: this.y };
+    } else {
+      return { x: this.x + dx, y: this.y + dy };
+    }
   }
 
   calculateTheta() {
@@ -85,19 +92,6 @@ class User {
     this.latency = (now - data.timestamp) / 2;
     console.log(`[${this.id}] PONG: ${this.latency}ms`);
   }
-
-  // joinGame(gameId) {
-  //   const game = gameSessionsManager.getGameSession(gameId);
-  //   if (!game) {
-  //     throw new CustomError(errorCodes.GAME_NOT_FOUND, `Can't join game: ID ${gameId}`);
-  //   }
-
-  //   this.gameId = gameId;
-  // }
-
-  // leaveGame() {
-  //   this.gameId = null;
-  // }
 }
 
 export default User;

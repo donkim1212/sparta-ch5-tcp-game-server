@@ -14,6 +14,7 @@ const locationUpdateHandler = async ({ socket, userId, payload }) => {
   /* do some calculation for x, y validation here */
   // user.updatePosition(x, y, inputX, inputY);
   user.updateInputVector(inputX, inputY);
+  user.calculateNextPosition(user.dt, true);
 
   const data = new LocationUpdateData(MAIN_GAME_ID, userId);
 

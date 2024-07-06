@@ -5,9 +5,9 @@ class LocationUpdateData {
     const game = gameSessionsManager.getGameSession(gameId);
     if (game) {
       this.users = game.getAllUserLocations();
-      if (userId) {
-        this.users = this.users.filter((user) => user.id !== userId);
-      }
+      // if (userId) {
+      //   this.users = this.users.filter((user) => user.id !== userId);
+      // }
     }
   }
 }

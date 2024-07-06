@@ -13,11 +13,13 @@ const initialHandler = async ({ socket, userId, payload }) => {
   /* check if deviceId exists first */
   const userData = await userDbQueries.findUserByDeviceId(deviceId);
   /* create user if dne */
+  const user = userSessionsManager.addUser(deviceId, playerId, socket, speed);
   if (!userData) {
     await userDbQueries.createUser(deviceId, 0, 0);
+    user.updatePosition(0, 0);
+  } else {
+    user.updatePosition(userData.x, userData.y);
   }
-  const user = userSessionsManager.addUser(deviceId, playerId, socket, speed);
-  user.updatePosition(userData ? userData.x : 0, userData ? userData.y : 0, 0, 0);
 
   const game = gameSessionsManager.getGameSession(MAIN_GAME_ID);
   game.addUser(user);
