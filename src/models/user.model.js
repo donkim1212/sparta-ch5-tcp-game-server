@@ -8,12 +8,16 @@ import { handleError } from "../utils/errors/error-handler.js";
 
 class User {
   constructor(id, playerId, socket, speed) {
+    this.socket = socket;
+    this.latency = 0;
+    this.ping();
     this.id = id;
     this.playerId = playerId;
-    this.socket = socket;
     this.speed = speed;
     this.x = 0;
     this.y = 0;
+    this.inputX = 0;
+    this.inputY = 0;
     this.sequence = 0;
     this.updatedAt = Date.now();
   }
