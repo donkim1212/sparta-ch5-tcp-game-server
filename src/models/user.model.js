@@ -30,21 +30,31 @@ class User {
     this.updatedAt = Date.now();
   }
 
+  updateInputVector(inputX, inputY) {
+    this.inputX = inputX;
+    this.inputY = inputY;
+    this.updatedAt = Date.now();
+  }
+
   calculateNextPosition(latency) {
     // distance = speed * time
-    const time = latency / 1000; // latency in seconds
+    const time = (latency <= 1 ? 1 : latency) / 1000; // latency in seconds
     const distance = this.speed * time;
 
     // angle can be obtained through input vector
+    if (this.inputX === 0 && this.inputY === 0) {
+      return { x: this.x, y: this.y };
+    }
     const theta = this.calculateTheta();
 
     // dx = cos(angle) * distance
     const dx = Math.cos(theta) * distance;
+    // console.log("-- theta:", theta, " | cos:", Math.cos(theta), " | sin:", Math.sin(theta), " | dx:", dx);
     // dy = sin(angle) * distance
     const dy = Math.sin(theta) * distance;
-    // nextX = this.x + dx;
-    // nextY = this.y + dy;
-    return { x: this.x + dx, y: this.y + dy };
+    this.x += dx;
+    this.y += dy;
+    return { x: this.x, y: this.y };
   }
 
   calculateTheta() {
