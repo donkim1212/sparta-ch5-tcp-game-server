@@ -52,25 +52,26 @@ public class Player : MonoBehaviour
     }
 
     public void MoveToNextPosition(Vector2 nextVec) {
-        // rigid.MovePosition(rigid.position + nextVec);
-        rigid.MovePosition(nextVec);
+        // rigid.MovePosition(nextVec);
+        Vector2 newPos = Vector2.Lerp(rigid.position, nextVec, 0.1f);
+        rigid.MovePosition(newPos);
     }
 
 
-    // void FixedUpdate() {
-    //     if (!GameManager.instance.isLive) {
-    //         return;
-    //     }
-    //     // 힘을 준다.
-    //     // rigid.AddForce(inputVec);
+    void FixedUpdate() {
+        if (!GameManager.instance.isLive) {
+            return;
+        }
+        // 힘을 준다.
+        // rigid.AddForce(inputVec);
 
-    //     // 속도 제어
-    //     // rigid.velocity = inputVec;
+        // 속도 제어
+        // rigid.velocity = inputVec;
 
-    //     // 위치 이동
-    //     // Vector2 nextVec = inputVec * speed * Time.fixedDeltaTime;
-    //     // rigid.MovePosition(rigid.position + nextVec);
-    // }
+        // 위치 이동
+        Vector2 nextVec = inputVec * speed * Time.fixedDeltaTime;
+        rigid.MovePosition(rigid.position + nextVec);
+    }
 
     // Update가 끝난이후 적용
     void LateUpdate() {
