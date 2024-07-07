@@ -11,15 +11,12 @@ import { MAIN_GAME_ID } from "../constants/game.constants.js";
 const initialHandler = async ({ socket, userId, payload }) => {
   const { deviceId, playerId, latency, speed } = payload; // deviceId IS userId
   /* check if deviceId exists first */
+  await userDbQueries.createUser(deviceId, 0, 0);
   const userData = await userDbQueries.findUserByDeviceId(deviceId);
   /* create user if dne */
   const user = userSessionsManager.addUser(deviceId, playerId, socket, speed);
-  if (!userData) {
-    await userDbQueries.createUser(deviceId, 0, 0);
-    user.updatePosition(0, 0);
-  } else {
-    user.updatePosition(userData.x, userData.y);
-  }
+
+  user.updatePosition(userData.x, userData.y);
 
   const game = gameSessionsManager.getGameSession(MAIN_GAME_ID);
   game.addUser(user);
