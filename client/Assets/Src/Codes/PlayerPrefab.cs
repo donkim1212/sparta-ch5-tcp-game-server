@@ -13,7 +13,9 @@ public class PlayerPrefab : MonoBehaviour
     private Vector3 currentPosition;
     private uint playerId;
     TextMeshPro myText;
-    
+
+    private float FLIP_THRESHOLD = 0.1f;
+
     void Awake()
     {
         anim = GetComponent<Animator>();
@@ -44,9 +46,18 @@ public class PlayerPrefab : MonoBehaviour
     // 서버로부터 위치 업데이트를 수신할 때 호출될 메서드
     public void UpdatePosition(float x, float y)
     {
+        // lastPosition = currentPosition;
+        // currentPosition = new Vector3(x, y);
+        // transform.position = currentPosition;
+        // ------
+        // lastPosition = currentPosition;
+        // currentPosition = Vector3.Lerp(lastPosition, new Vector3(x, y), 0.1f);
+        // transform.position = currentPosition;
+        // ------
         lastPosition = currentPosition;
         currentPosition = new Vector3(x, y);
-        transform.position = currentPosition;
+        Vector3 nextPos = Vector3.Lerp(lastPosition, currentPosition, 0.1f);
+        transform.position = nextPos;
 
         UpdateAnimation();
     }
@@ -68,7 +79,8 @@ public class PlayerPrefab : MonoBehaviour
 
         anim.SetFloat("Speed", inputVec.magnitude);
 
-        if (inputVec.x != 0)
+        // if (inputVec.x != 0) // && Mathf.Abs(inputVec.x) <= 0.5f)
+        if (Mathf.Abs(inputVec.x) > FLIP_THRESHOLD)
         {
             spriter.flipX = inputVec.x < 0;
         }

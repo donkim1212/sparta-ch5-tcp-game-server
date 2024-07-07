@@ -49,11 +49,12 @@ public class Player : MonoBehaviour
 
         // 위치 이동 패킷 전송 -> 서버로
         NetworkManager.instance.SendLocationUpdatePacket(rigid.position.x, rigid.position.y);
+        
     }
 
     public void MoveToNextPosition(Vector2 nextVec) {
         // rigid.MovePosition(nextVec);
-        Vector2 newPos = Vector2.Lerp(rigid.position, nextVec, 0.1f);
+        Vector2 newPos = Vector2.Lerp(rigid.position, nextVec, Time.fixedDeltaTime);
         rigid.MovePosition(newPos);
     }
 

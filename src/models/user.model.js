@@ -16,7 +16,7 @@ class User {
     this.speed = speed;
     this.x = 0;
     this.y = 0;
-    this.dt = 0;
+    // this.dt = 0;
     this.inputX = 0;
     this.inputY = 0;
     this.sequence = 0;
@@ -28,15 +28,15 @@ class User {
     this.y = y;
     this.inputX = inputX;
     this.inputY = inputY;
-
-    const now = Date.now();
-    this.dt = (now - this.updatedAt) / 1000;
-    this.updatedAt = now;
+    // const now = Date.now();
+    // this.dt = (now - this.updatedAt) / 1000;
+    // this.updatedAt = now;
+    this.updatedAt = Date.now();
   }
 
   calculateNextPosition(t) {
     // distance = speed * time
-    const distance = this.speed * (this.dt + t);
+    const distance = this.speed * t;
 
     // angle can be obtained through input vector
     if (this.inputX === 0 && this.inputY === 0) {
