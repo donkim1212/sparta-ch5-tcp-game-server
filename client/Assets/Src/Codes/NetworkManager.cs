@@ -257,7 +257,7 @@ public class NetworkManager : MonoBehaviour
         }
     }
 
-    void HandlePingPacket(byte[] packetData) {
+    async void HandlePingPacket(byte[] packetData) {
         var response = Packets.Deserialize<Ping>(packetData);
         Ping ping = new Ping {
             // timestamp = (ulong) DateTimeOffset.Now.ToUnixTimeMilliseconds()
@@ -273,6 +273,8 @@ public class NetworkManager : MonoBehaviour
         byte[] packet = new byte[header.Length + data.Length];
         Array.Copy(header, 0, packet, 0, header.Length);
         Array.Copy(data, 0, packet, header.Length, data.Length);
+
+        await Task.Delay(GameManager.instance.latency);
 
         stream.Write(packet, 0, packet.Length);
     }
@@ -332,19 +334,6 @@ public class NetworkManager : MonoBehaviour
             if (data.Length > 0) {
                 // 패킷 데이터 처리
                 response = Packets.Deserialize<LocationUpdate>(data);
-                // LocationUpdate.UserLocation target = null;
-                // foreach(LocationUpdate.UserLocation user in response.users) {
-                //     if (user.id == GameManager.instance.player.deviceId) {
-                //         target = user;
-                //         Vector3 newPos = new Vector3(user.x, user.y, 0);
-                //         GameManager.instance.player.rigid.position = newPos;
-                //         break;
-                //     }
-                // }
-                // if (target == null) {
-                //     Debug.LogError("Player's location data not in LocationUpdate");
-                // }
-                // response.users.Remove(target);
             } else {
                 // data가 비어있을 경우 빈 배열을 전달
                 response = new LocationUpdate { users = new List<LocationUpdate.UserLocation>() };
