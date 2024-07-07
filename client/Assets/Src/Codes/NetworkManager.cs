@@ -179,6 +179,7 @@ public class NetworkManager : MonoBehaviour
             deviceId = GameManager.instance.deviceId,
             playerId = GameManager.instance.playerId,
             latency = GameManager.instance.latency,
+            speed = GameManager.instance.player.speed,
         };
 
         // handlerId는 0으로 가정
@@ -190,8 +191,10 @@ public class NetworkManager : MonoBehaviour
         {
             x = x,
             y = y,
+            inputX = GameManager.instance.player.inputVec.x,
+            inputY = GameManager.instance.player.inputVec.y,
         };
-
+        
         SendPacket(locationUpdatePayload, (uint)Packets.HandlerIds.LocationUpdate);
     }
 
@@ -254,9 +257,11 @@ public class NetworkManager : MonoBehaviour
         }
     }
 
-    void Pong() {
+    async void HandlePingPacket(byte[] packetData) {
+        var response = Packets.Deserialize<Ping>(packetData);
         Ping ping = new Ping {
-            timestamp = (ulong) DateTimeOffset.Now.ToUnixTimeMilliseconds()
+            // timestamp = (ulong) DateTimeOffset.Now.ToUnixTimeMilliseconds()
+            timestamp = response.timestamp,
         };
         
         var bufferWriter = new ArrayBufferWriter<byte>();
@@ -269,13 +274,9 @@ public class NetworkManager : MonoBehaviour
         Array.Copy(header, 0, packet, 0, header.Length);
         Array.Copy(data, 0, packet, header.Length, data.Length);
 
-        stream.Write(packet, 0, packet.Length);
-    }
+        await Task.Delay(GameManager.instance.latency);
 
-    void HandlePingPacket(byte[] packetData) {
-        // 패킷 데이터 처리
-        var response = Packets.Deserialize<Ping>(packetData);
-        Pong();
+        stream.Write(packet, 0, packet.Length);
     }
 
     void HandleNormalPacket(byte[] packetData) {

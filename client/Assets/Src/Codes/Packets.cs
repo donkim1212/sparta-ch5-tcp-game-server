@@ -48,6 +48,9 @@ public class InitialPayload
     
     [ProtoMember(3, IsRequired = true)]
     public float latency { get; set; }
+
+    [ProtoMember(4, IsRequired = true)]
+    public float speed { get; set; }
 }
 
 [ProtoContract]
@@ -70,8 +73,15 @@ public class CommonPacket
 public class LocationUpdatePayload {
     [ProtoMember(1, IsRequired = true)]
     public float x { get; set; }
+    
     [ProtoMember(2, IsRequired = true)]
     public float y { get; set; }
+    
+    [ProtoMember(3, IsRequired = true)]
+    public float inputX { get; set; }
+    
+    [ProtoMember(4, IsRequired = true)]
+    public float inputY { get; set; }
 }
 
 [ProtoContract]
@@ -122,7 +132,7 @@ public class Response {
 
     [ProtoMember(3)]
     public ulong timestamp { get; set; }
-
+    
     [ProtoMember(4)]
     public byte[] data { get; set; }
 }

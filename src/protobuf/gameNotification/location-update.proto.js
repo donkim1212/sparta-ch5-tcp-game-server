@@ -4,10 +4,10 @@ class LocationUpdateData {
   constructor(gameId, userId) {
     const game = gameSessionsManager.getGameSession(gameId);
     if (game) {
-      this.users = game.getAllUsers();
-      if (userId) {
-        this.users = this.users.filter((user) => user.id !== userId);
-      }
+      this.users = game.getAllUserLocations();
+      // if (userId) {
+      //   this.users = this.users.filter((user) => user.id !== userId);
+      // }
     }
   }
 }

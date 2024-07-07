@@ -1,16 +1,9 @@
-import { MAIN_GAME_ID } from "../constants/game.constants.js";
-import userDbQueries from "../db/user.db.js";
-import gameSessionsManager from "../session/game.session.js";
-import userSessionsManager from "../session/user.session.js";
 import { handleError } from "../utils/errors/error-handler.js";
+import { userRemover } from "../utils/user-remover.js";
 
 export const onEnd = (socket) => async () => {
   try {
-    console.log(`Client disconnected: ${socket.remoteAddress}:${socket.remotePort}`);
-    const user = userSessionsManager.getUserBySocket(socket);
-    await userDbQueries.updateUserLogin(user.id, user.x, user.y);
-    userSessionsManager.removeUserByuserId(user.id);
-    gameSessionsManager.getGameSession(MAIN_GAME_ID).removeUser(user.id);
+    userRemover(socket);
   } catch (err) {
     handleError(socket, err);
   }

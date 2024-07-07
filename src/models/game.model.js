@@ -1,5 +1,6 @@
 import { gameStateConstants, gameConstants } from "../constants/game.constants.js";
 import IntervalManager from "../managers/interval.manager.js";
+import { PING_INTERVAL } from "../constants/ping.constants.js";
 
 class Game {
   constructor(id) {
@@ -15,7 +16,7 @@ class Game {
     }
     this.users.push(user);
 
-    this.intervalManager.addPlayer(user.id, user.ping.bind(user), 1000);
+    this.intervalManager.addPlayer(user.id, user.ping.bind(user), PING_INTERVAL);
     // if (this.users.length === gameConstants.MAX_PLAYERS) {
     //   setTimeout(() => {
     //     this.startGame();
@@ -35,6 +36,18 @@ class Game {
     this.intervalManager.removePlayer(userId);
     this.users = this.users.filter((user) => user.id !== userId);
     this.state = gameStateConstants.WAITING;
+  }
+
+  getMaxLatency() {
+    return Math.max(...this.users.map((user) => user.latency));
+  }
+
+  getAllUserLocations() {
+    const maxLatency = this.getMaxLatency() / 1000; // in seconds
+    return this.users.map((user) => {
+      const { x, y } = user.calculateNextPosition(maxLatency);
+      return { id: user.id, playerId: user.playerId, x, y };
+    });
   }
 
   startGame() {
