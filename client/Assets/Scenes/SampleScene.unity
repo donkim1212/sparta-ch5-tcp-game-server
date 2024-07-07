@@ -6083,7 +6083,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 9.555555
+  orthographic size: 10.611111
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -11078,7 +11078,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73691c2d8013f423ca8c44f2018c39f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgmClip: {fileID: 8300000, guid: 4559935c00ef8e94b846e2e03e39f0d0, type: 3}
+  bgmClip: {fileID: 0}
   bgmVolume: 0.05
   sfxClips:
   - {fileID: 8300000, guid: 291608b8d286e2a4580ff36324455ce2, type: 3}
@@ -12153,7 +12153,7 @@ MonoBehaviour:
   gameTime: 0
   targetFrameRate: 30
   version: 1.0.0
-  latency: 1
+  latency: 10
   playerId: 0
   deviceId: 
   pool: {fileID: 1572847318}
@@ -17616,7 +17616,7 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 2
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
