@@ -7,7 +7,7 @@
 - 과제 Specification: [링크](https://teamsparta.notion.site/Chapter-5-060313f2b3da4ec39e729621a6d81d8a)
 
 - 게임 클라이언트 repository: [링크](https://github.com/Ho-yeong/node5_unity_sample) by 조호영 튜터님 (Ho-yeong)
-  - 이 repository를 clone하고 Assets 디렉토리를 현재 repository의 client 디렉토리에 있는 Assets로 덮어 써주세요.
+  - 위 repository를 clone하고 Assets 디렉토리를 현재 repository의 client/Assets로 덮어 써주세요.
 
 <br>
 
