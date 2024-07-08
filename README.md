@@ -8,6 +8,7 @@
 
 - 게임 클라이언트 repository: [링크](https://github.com/Ho-yeong/node5_unity_sample) by 조호영 튜터님 (Ho-yeong)
   - **필수**: 위 repository를 clone하고 Assets 디렉토리를 현재 repository의 client/Assets로 덮어 써주세요.
+  - **추가**: 위 사항이 적용된 [클라이언트 repository](https://github.com/donkim1212/sparta-ch5-tcp-game-client)를 추가했습니다.
  
 
 <br>
