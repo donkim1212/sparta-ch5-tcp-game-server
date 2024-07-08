@@ -73,5 +73,5 @@ Node.js의 기본 모듈인 net의 내장 socket을 이용하여 TCP 게임 서�
 ```
 
 ## 4. 패킷 구조
-[https://github.com/donkim1212/sparta-ch5-tcp-game-server/issues/17](https://github.com/donkim1212/sparta-ch5-tcp-game-server/issues/17)
+[https://github.com/donkim1212/sparta-ch5-tcp-game-server/issues/17](https://github.com/donkim1212/sparta-ch5-tcp-game-server/issues/17) 참고
 <br>
